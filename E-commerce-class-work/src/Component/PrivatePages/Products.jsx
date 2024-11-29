@@ -23,12 +23,11 @@ export default function Products() {
         // console.log("Fetched Products:", response.data);
         setProducts(response.data.products);
         setLoading(false);
-        setNotFound(false)
+        setNotFound(false);
       })
       .catch((error) => {
         alert("Error fetching products:", error);
         setLoading(false);
-
       });
   }, [chosenCategory]);
 
@@ -39,8 +38,7 @@ export default function Products() {
         // console.log("Fetched Categories:", res.data);
         setCategories(res.data);
         setLoading(false);
-        setNotFound(false)
-
+        setNotFound(false);
       })
       .catch((error) => console.error("Fetch error:", error));
   }, []);
@@ -48,12 +46,15 @@ export default function Products() {
   return (
     <>
       {loading ? (
-        <Loader />
+        <div className="flex justify-center items-center min-h-screen">
+          <Loader />
+        </div>
       ) : notFound ? (
         <NotFound />
       ) : (
-        <div>
-          <div className="flex gap-3 flex-wrap m-4">
+        <div className="p-4">
+          {/* Category Chip Selection */}
+          <div className="flex gap-4 flex-wrap justify-center mb-6">
             <CategoryChip
               onClick={() => setChosenCategory("All")}
               isChosen={chosenCategory === "All"}
@@ -65,11 +66,10 @@ export default function Products() {
                 isChosen={category.slug === chosenCategory}
                 category={category}
                 key={category.slug}
-                
-
               />
             ))}
           </div>
+
           <div className="flex flex-wrap m-4">
             {products.map((item) => (
               <ProductCard item={item} key={item.id} />
