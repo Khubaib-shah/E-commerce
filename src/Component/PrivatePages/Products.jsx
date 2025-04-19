@@ -17,6 +17,7 @@ export default function Products() {
         ? "https://dummyjson.com/products"
         : `https://dummyjson.com/products/category/${chosenCategory}`;
 
+    console.log(`Fetching products from: ${url}`);
     axios
       .get(url)
       .then((response) => {
@@ -54,12 +55,15 @@ export default function Products() {
       ) : (
         <div className="p-4">
           {/* Category Chip Selection */}
-          <div className="flex gap-4 flex-wrap justify-center mb-6">
+          <div className="flex  gap-4 justify-start overflow-y-auto max-h-[300px] border p-2 scrollbar-hide rounded-lg">
+            {/* All Category Chip */}
             <CategoryChip
               onClick={() => setChosenCategory("All")}
               isChosen={chosenCategory === "All"}
-              category={{ slug: "All", name: "All" }}
+              category={{ name: "All", slug: "All" }}
             />
+
+            {/* Map through categories and create chips */}
             {categories.map((category) => (
               <CategoryChip
                 onClick={() => setChosenCategory(category.slug)}
